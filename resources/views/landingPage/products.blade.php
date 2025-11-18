@@ -41,7 +41,7 @@
                         <p class="text-lg font-bold text-gray-900">{{ $product['price'] }}</p>
 
                         {{-- Opsi: Tambahkan rating atau tombol beli cepat di sini --}}
-                        <a href="{{ route('product.detail', ['slug' => Str::slug($product['name'])]) }}"
+                        <a href="{{ route('productdetail', ['slug' => Str::slug($product['name'])]) }}"
                            class="mt-3 inline-block text-xs text-blue-600 hover:text-blue-800 font-medium">
                             Lihat Detail
                         </a>

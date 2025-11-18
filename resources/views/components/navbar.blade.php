@@ -7,7 +7,9 @@
                 {{-- Navigation Links --}}
                 <div class="hidden md:flex items-center space-x-6">
   <a href="#" class="text-[#7A3E10] font-medium border-b-2 border-[#7A3E10] pb-1">Beranda</a>
-  <a href="#" class="text-gray-600 hover:text-[#7A3E10]">Produk</a>
+<a href="{{ url('/products') }}" class="text-gray-600 hover:text-[#7A3E10]">
+    Produk
+</a>
 </div>
 
             </div>

@@ -1,7 +1,5 @@
 @extends('template.main-template')
 
-
-
 @section('content')
 
 <div>
@@ -68,7 +66,7 @@
 
                 <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition duration-300">
 
-                    <a href="{{ route('product.show', ['slug' => 'kursi-rotan-alami']) }}" class="block">
+                    <a href="{{ route('productdetail', ['slug' => 'kursi-rotan-alami']) }}" class="block">
 
                         <img 
 
@@ -96,7 +94,7 @@
 
                 <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition duration-300">
 
-                    <a href="{{ route('product.show', ['slug' => 'kain-batik-tulis']) }}" class="block">
+                    <a href="{{ route('productdetail', ['slug' => 'kain-batik-tulis']) }}" class="block">
 
                         <img 
 
@@ -124,7 +122,7 @@
 
                 <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition duration-300">
 
-                    <a href="{{ route('product.show', ['slug' => 'patung-ukir-bali']) }}" class="block">
+                    <a href="{{ route('productdetail', ['slug' => 'patung-ukir-bali']) }}" class="block">
 
                         <img 
 
