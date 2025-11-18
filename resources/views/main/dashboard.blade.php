@@ -39,35 +39,35 @@
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 text-center">
             {{-- Produk 1 --}}
             <div class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
-                <img src="https://i.ibb.co/jrCk2Rf/storage.jpg" alt="Storage Basket" class="rounded-md mb-3 w-full h-40 object-cover">
+                <img src="{{ asset('images/storage.jpg') }}" alt="Storage Basket" class="rounded-md mb-3 w-full h-40 object-cover">
                 <h3 class="text-gray-800 font-medium">Storage basket</h3>
                 <p class="text-gray-500">Rp 120.000</p>
             </div>
 
             {{-- Produk 2 --}}
             <div class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
-                <img src="https://i.ibb.co/1L0zT4H/lamp.jpg" alt="Craft Lamp" class="rounded-md mb-3 w-full h-40 object-cover">
+                <img src="{{ asset('images/Craft lamp.jpg') }}" alt="Craft Lamp" class="rounded-md mb-3 w-full h-40 object-cover">
                 <h3 class="text-gray-800 font-medium">Craft Lamp</h3>
                 <p class="text-gray-500">Rp 100.000</p>
             </div>
 
             {{-- Produk 3 --}}
             <div class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
-                <img src="https://i.ibb.co/WcxYbKw/vase.jpg" alt="Vas Rotan" class="rounded-md mb-3 w-full h-40 object-cover">
+                <img src="{{ asset('images/Vas rotan.jpg') }}" alt="Vas Rotan" class="rounded-md mb-3 w-full h-40 object-cover">
                 <h3 class="text-gray-800 font-medium">Vas Rotan</h3>
                 <p class="text-gray-500">Rp 100.000</p>
             </div>
 
             {{-- Produk 4 --}}
             <div class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
-                <img src="https://i.ibb.co/pxDVV3P/container.jpg" alt="Container Storage" class="rounded-md mb-3 w-full h-40 object-cover">
+                <img src="{{ asset('images/Meja.jpg') }}" alt="Meja kayu" class="rounded-md mb-3 w-full h-40 object-cover">
                 <h3 class="text-gray-800 font-medium">Container Storage</h3>
                 <p class="text-gray-500">Rp 60.000</p>
             </div>
 
             {{-- Produk 5 --}}
             <div class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
-                <img src="https://i.ibb.co/5T3whjF/bag.jpg" alt="Tas Rotan" class="rounded-md mb-3 w-full h-40 object-cover">
+                <img src="{{ asset('images/Tas rotan.jpg') }}" alt="Tas Rotan" class="rounded-md mb-3 w-full h-40 object-cover">
                 <h3 class="text-gray-800 font-medium">Tas Rotan</h3>
                 <p class="text-gray-500">Rp 50.000</p>
             </div>
