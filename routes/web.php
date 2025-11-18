@@ -2,7 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
-use App\Http\Controllers\ProductController; // <-- BARIS TAMBAHAN
+use App\Http\Controllers\ProductController; 
 use Illuminate\Support\Facades\Route;
 
 // Halaman utama

@@ -6,10 +6,19 @@ use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
+    // Menampilkan detail produk berdasarkan slug
     public function show($slug)
     {
-        return view('landingPage.product-detail', [
+        // Sementara: data contoh (nanti bisa diganti ambil dari database)
+        $product = [
+            'name' => 'Tas Rotan 20 cm',
+            'price' => 90000,
+            'image' => 'tas_rotan_detail.jpg',
             'slug' => $slug,
+        ];
+
+        return view('landingPage.product-detail', [
+            'product' => $product,
         ]);
     }
 }
