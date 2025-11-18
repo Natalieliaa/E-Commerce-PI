@@ -61,7 +61,7 @@
         <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 text-center">
             {{-- Produk 1 --}}
             <div class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
-                <img src="{{ asset('images/storage.jpg') }}" alt="Storage Basket"
+                <img src="{{ asset('images/storage.jpg') }}" alt="Storage"
                     class="rounded-md mb-3 w-full h-40 object-cover">
                 <h3 class="text-gray-800 font-medium">Storage </h3>
                 <p class="text-gray-500">Rp 120.000</p>
@@ -87,7 +87,7 @@
             <div class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
                 <img src="{{ asset('images/meja.jpg') }}" alt="Meja kayu"
                     class="rounded-md mb-3 w-full h-40 object-cover">
-                <h3 class="text-gray-800 font-medium">Container Storage</h3>
+                <h3 class="text-gray-800 font-medium">Meja</h3>
                 <p class="text-gray-500">Rp 60.000</p>
             </div>
 
