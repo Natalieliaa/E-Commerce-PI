@@ -66,23 +66,16 @@
 
                 <div class="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-2xl transition duration-300">
 
-                    <a href="{{ route('productdetail', ['slug' => 'kursi-rotan-alami']) }}" class="block">
-
-                        <img 
-
-                            src="https://via.placeholder.com/600x400?text=Kerajinan+Rotan" 
-
-                            alt="Foto Produk 1: Kerajinan Rotan" 
-
-                            class="w-full h-64 object-cover" 
-
-                        >
+                    <img src="{{ asset('images/rak buku.jpg') }}" 
+                    alt="Rak Buku"
+                    class="w-full h-64 object-cover"
+/>
 
                         <div class="py-4 px-4 text-center">
 
-                            <h5 class="text-xl font-semibold text-brown-800 mb-1">Kursi Rotan Alami</h5>
+                            <h5 class="text-xl font-semibold text-brown-800 mb-1">Rak Buku</h5>
 
-                            <span class="block text-lg font-bold text-green-700">Rp. 450.000</span>
+                            <span class="block text-lg font-bold text-green-700">Rp. 350.000</span>
 
                         </div>
 
@@ -96,21 +89,17 @@
 
                     <a href="{{ route('productdetail', ['slug' => 'kain-batik-tulis']) }}" class="block">
 
-                        <img 
-
-                            src="https://via.placeholder.com/600x400?text=Kain+Batik" 
-
-                            alt="Foto Produk 2: Kain Batik" 
-
-                            class="w-full h-64 object-cover" 
+                        <img src="{{ asset('images/Lemari.jpg') }}" 
+                        alt="Rak Buku"
+                        class="w-full h-64 object-cover"
 
                         >
 
                         <div class="py-4 px-4 text-center">
 
-                            <h5 class="text-xl font-semibold text-brown-800 mb-1">Kain Batik Tulis</h5>
+                            <h5 class="text-xl font-semibold text-brown-800 mb-1">Lemari</h5>
 
-                            <span class="block text-lg font-bold text-green-700">Rp. 280.000</span>
+                            <span class="block text-lg font-bold text-green-700">Rp. 500.000</span>
 
                         </div>
 
@@ -124,21 +113,17 @@
 
                     <a href="{{ route('productdetail', ['slug' => 'patung-ukir-bali']) }}" class="block">
 
-                        <img 
-
-                            src="https://via.placeholder.com/600x400?text=Ukiran+Kayu" 
-
-                            alt="Foto Produk 3: Ukiran Kayu" 
-
-                            class="w-full h-64 object-cover" 
+                        <img src="{{ asset('images/Vas rotan.jpg') }}" 
+                        alt="Vas Rotan"
+                        class="w-full h-64 object-cover"
 
                         >
 
                         <div class="py-4 px-4 text-center">
 
-                            <h5 class="text-xl font-semibold text-brown-800 mb-1">Patung Ukir Bali</h5>
+                            <h5 class="text-xl font-semibold text-brown-800 mb-1">Vas Rotan</h5>
 
-                            <span class="block text-lg font-bold text-green-700">Rp. 850.000</span>
+                            <span class="block text-lg font-bold text-green-700">Rp. 100.000</span>
 
                         </div>
 
