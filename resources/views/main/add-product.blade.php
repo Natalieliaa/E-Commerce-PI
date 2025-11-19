@@ -23,7 +23,7 @@
 
             @foreach ($products as $product)
                 <div class="bg-white rounded-lg shadow-md overflow-hidden transition transform hover:scale-[1.02]">
-                    <img src="{{ asset('images/' . $product['image']) }}" alt="{{ $product['name'] }}" class="w-full h-40 object-cover">
+                    <img src="{{ asset('images/' . rawurlencode(basename($product['image']))) }}" alt="{{ $product['name'] }}" class="w-full h-40 object-cover">
                     <div class="p-4">
                         <h3 class="font-medium text-gray-800">{{ $product['name'] }}</h3>
                         <div class="flex justify-between items-center mt-1 mb-3">

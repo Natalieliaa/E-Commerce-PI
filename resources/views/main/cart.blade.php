@@ -31,7 +31,7 @@
 
                     {{-- Gambar Produk --}}
                     <div class="flex-shrink-0 mr-4">
-                        <img src="{{ asset('images/' . $item['image']) }}" alt="{{ $item['name'] }}" class="w-24 h-24 object-cover rounded-md shadow-sm">
+                        <img src="{{ asset('images/' . rawurlencode(basename($item['image']))) }}" alt="{{ $item['name'] }}" class="w-24 h-24 object-cover rounded-md shadow-sm">
                     </div>
 
                     {{-- Detail Item --}}

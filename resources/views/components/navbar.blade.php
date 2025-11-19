@@ -17,17 +17,19 @@
             {{-- Right Section --}}
             <div class="flex items-center space-x-5">
                 {{-- Search Bar --}}
-                <div class="relative flex items-center">
+                <form action="{{ route('products.page') }}" method="GET" class="relative flex items-center">
                     <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-400 absolute left-3" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
                         <circle cx="11" cy="11" r="8" />
                         <path d="M21 21l-4.35-4.35" />
                     </svg>
                     <input
                         type="text"
-                        placeholder="Search"
+                        name="q"
+                        value="{{ request()->get('q', '') }}"
+                        placeholder="Search produk..."
                         class="pl-9 pr-3 py-1.5 text-sm border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500"
                     />
-                </div>
+                </form>
 
                 {{-- Profile Image --}}
                 <div class="w-9 h-9 rounded-full overflow-hidden border border-gray-300 cursor-pointer">

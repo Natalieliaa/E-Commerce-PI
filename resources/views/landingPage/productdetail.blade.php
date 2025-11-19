@@ -16,7 +16,8 @@
             <div class="flex flex-col items-center">
 
                 <div class="w-full max-w-sm rounded-lg overflow-hidden border border-gray-200 shadow-md mb-6">
-                    <img src="{{ asset('images/' . $product['image']) }}"
+                    @php $imgFile = $product['image'] ?? ''; @endphp
+                    <img src="{{ asset('images/' . rawurlencode(basename($imgFile))) }}"
                          alt="{{ $product['name'] }}"
                          class="w-full h-auto object-cover">
                 </div>

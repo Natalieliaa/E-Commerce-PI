@@ -72,11 +72,33 @@ class ProductController extends Controller
     }
 
     /** Halaman list produk */
-    public function index()
+    public function index(\Illuminate\Http\Request $request)
     {
         $products = $this->getProducts();
 
-        return view('landingPage.products', compact('products'));
+        $q = trim((string) $request->query('q', ''));
+        if ($q !== '') {
+            $filtered = [];
+            $qLower = mb_strtolower($q);
+            foreach ($products as $p) {
+                if (mb_stripos($p['name'], $q) !== false || mb_stripos((string)($p['image'] ?? ''), $q) !== false) {
+                    $filtered[] = $p;
+                } else {
+                    // also check words inside name
+                    $words = preg_split('/\s+/', $p['name']);
+                    foreach ($words as $w) {
+                        if (mb_stripos($w, $q) !== false) {
+                            $filtered[] = $p;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            $products = $filtered;
+        }
+
+        return view('landingPage.products', compact('products', 'q'));
     }
 
     /** Cari produk berdasarkan slug */

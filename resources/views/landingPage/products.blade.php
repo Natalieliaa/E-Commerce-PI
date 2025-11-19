@@ -3,27 +3,25 @@
 
 @section('content')
 <div class="bg-gray-100 py-12 px-6 md:px-20">
-    @php
-        use Illuminate\Support\Str;
+    @php use Illuminate\Support\Str; @endphp
 
-        $products = [
-            ['name' => 'Rak Buku',       'price' => 250000, 'image' => 'images/rak buku.jpg'],
-            ['name' => 'Gantungan',      'price' => 25000,  'image' => 'images/gantungan.jpg'],
-            ['name' => 'Vas Rotan',      'price' => 100000, 'image' => 'images/vas rotan.jpg'],
-            ['name' => 'Keranjang',      'price' => 150000, 'image' => 'images/keranjang.jpg'],
-            ['name' => 'Bingkai Foto',   'price' => 50000,  'image' => 'images/bingkai foto.jpg'],
-            ['name' => 'Storage', 'price' => 120000, 'image' => 'images/storage.jpg'],
-            ['name' => 'Craft Lamp',     'price' => 100000, 'image' => 'images/craft lamp.jpg'],
-            ['name' => 'Meja Kayu',      'price' => 200000, 'image' => 'images/meja.jpg'],
-            ['name' => 'Tas Rotan',      'price' => 90000,  'image' => 'images/tas rotan.jpg'],
-        ];
-    @endphp
+    @if(isset($q) && $q !== '')
+        <div class="mb-4 text-left">
+            <strong>Hasil pencarian untuk "{{ e($q) }}"</strong> — {{ count($products) }} produk ditemukan.
+        </div>
+    @endif
 
     <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-5 gap-6 text-center">
-        @foreach ($products as $product)
+        @forelse ($products as $product)
             <div class="bg-white p-4 rounded-lg shadow hover:shadow-lg transition">
                 {{-- Gambar produk --}}
-                <img src="{{ asset($product['image']) }}"
+                @php
+                    $imgPath = $product['image'] ?? '';
+                    if ($imgPath && ! \Illuminate\Support\Str::startsWith($imgPath, 'images/')) {
+                        $imgPath = 'images/' . $imgPath;
+                    }
+                @endphp
+                 <img src="{{ asset('images/' . rawurlencode(basename($imgPath))) }}"
                      alt="{{ $product['name'] }}"
                      class="rounded-md mb-3 w-full h-40 object-cover">
 
@@ -39,7 +37,12 @@
                     Lihat Detail
                 </a>
             </div>
-        @endforeach
+        @empty
+            <div class="col-span-full text-center py-12">
+                <p class="text-gray-600">Tidak ada produk ditemukan.</p>
+                <a href="{{ route('products.page') }}" class="text-blue-600 mt-3 inline-block">Tampilkan semua produk</a>
+            </div>
+        @endforelse
     </div>
 </div>
 @endsection

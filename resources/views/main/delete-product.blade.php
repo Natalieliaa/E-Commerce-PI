@@ -37,7 +37,7 @@
                             <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
                         </div>
 
-                        <img src="{{ asset('images/' . $product['image']) }}" alt="{{ $product['name'] }}" class="w-full h-40 object-cover">
+                        <img src="{{ asset('images/' . rawurlencode(basename($product['image']))) }}" alt="{{ $product['name'] }}" class="w-full h-40 object-cover">
                         <div class="p-4">
                             <h3 class="font-medium text-gray-800">{{ $product['name'] }}</h3>
                             <p class="text-sm text-gray-600">Stok: {{ $product['stock'] }}</p>

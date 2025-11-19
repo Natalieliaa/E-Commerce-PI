@@ -21,7 +21,7 @@
 
             @foreach ($products as $product)
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden transition transform hover:shadow-xl duration-300">
-                    <img src="{{ asset('images/' . $product['image']) }}" alt="{{ $product['name'] }}" class="w-full h-40 object-cover p-3">
+                    <img src="{{ asset('images/' . rawurlencode(basename($product['image']))) }}" alt="{{ $product['name'] }}" class="w-full h-40 object-cover p-3">
                     <div class="p-4">
                         <h3 class="font-medium text-gray-800 truncate">{{ $product['name'] }}</h3>
                         <p class="text-sm text-gray-600">Stok: {{ $product['stock'] }}</p>
@@ -55,8 +55,8 @@
             <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
 
                 {{-- Detail Produk --}}
-                <div class="md:col-span-1 text-center">
-                    <img src="{{ asset('images/tas_kayu_detail.jpg') }}" alt="Tas Kayu" class="w-40 h-40 object-cover rounded-lg mx-auto mb-3 border border-gray-300">
+                    <div class="md:col-span-1 text-center">
+                    <img src="{{ asset('images/' . rawurlencode(basename('tas_kayu_detail.jpg'))) }}" alt="Tas Kayu" class="w-40 h-40 object-cover rounded-lg mx-auto mb-3 border border-gray-300">
                     <p class="text-lg font-bold text-gray-900">Tas Kayu</p>
                     <p class="text-xl font-extrabold text-gray-800">Rp 150.000</p>
                 </div>

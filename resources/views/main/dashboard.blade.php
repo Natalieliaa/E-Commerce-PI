@@ -40,9 +40,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8 border-b pb-6">
                 @foreach ($checkoutItems as $item)
                     <div class="flex items-start p-3 border border-gray-200 rounded-lg bg-gray-50">
-                        <img src="{{ asset('images/' . $item['image']) }}"
-                             alt="{{ $item['name'] }}"
-                             class="w-20 h-20 object-cover rounded-md shadow-sm mr-3">
+                        <img src="{{ asset('images/' . rawurlencode(basename($item['image']))) }}"
+                            alt="{{ $item['name'] }}"
+                            class="w-20 h-20 object-cover rounded-md shadow-sm mr-3">
                         <div class="flex-grow">
                             <div class="flex justify-between items-start">
                                 <h3 class="text-lg font-semibold text-gray-900">{{ $item['name'] }}</h3>
