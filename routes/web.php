@@ -53,11 +53,11 @@ Route::get('/checkout', function (Request $request, ProductController $productCo
 
     $totalPrice = $product['price'] * $qty;
 
-    rreturn view('landingPage.main.checkout', [
-    'product'    => $product,
-    'qty'        => $qty,
-    'totalPrice' => $totalPrice,
-   ]);
+    return view('main.checkout', [
+        'product'    => $product,
+        'qty'        => $qty,
+        'totalPrice' => $totalPrice,
+    ]);
 })->name('checkout');
 
 // (opsional) POST /checkout untuk submit pesanan
