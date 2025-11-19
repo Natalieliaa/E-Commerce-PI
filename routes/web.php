@@ -23,7 +23,7 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // --- Rute Dashboard & Seller ---
 Route::get('/dashboard', function () {
     return view('main.dashboard');
-});
+})->name('dashboard');
 
 Route::get('/sellerconfirmation', function () {
     return view('seller-confirmation');

@@ -41,15 +41,30 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        $request->validate([
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
+
         $credentials = $request->only('email', 'password');
 
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('/dashboard');
+            $request->session()->regenerate();
+            // Clear any previously stored intended URL (prevent redirect back to /checkout)
+            $request->session()->forget('url.intended');
+
+            // Role-based redirect: customers -> products listing, others -> dashboard
+            $user = Auth::user();
+            if ($user && isset($user->role) && $user->role === 'customer') {
+                return redirect()->route('products.page');
+            }
+
+            return redirect()->route('dashboard');
         }
 
         return back()->withErrors([
             'email' => 'Email atau password salah.',
-        ]);
+        ])->withInput(['email' => $request->email]);
     }
 
     public function logout()
