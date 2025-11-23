@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('sellers', function (Blueprint $table) {
+        Schema::create('customers', function (Blueprint $table) {
     $table->id(); // <-- otomatis bigIncrements unsigned
     $table->string('nama');
     $table->string('no_telepon', 20);
@@ -19,8 +19,7 @@ return new class extends Migration
     $table->string('email')->unique();
     $table->string('password');
     $table->timestamps();
-    });
-
+        });
     }
 
     /**
@@ -28,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('products');
+        Schema::dropIfExists('customers');
     }
 };

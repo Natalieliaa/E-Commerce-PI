@@ -10,8 +10,8 @@
 
             <div style="margin-bottom: 20px;">
                 <label style="display: block; font-size: 0.9em; margin-bottom: 8px; font-weight: 500;">Nama</label>
-                <input type="text" name="name" class="input-field" value="{{ old('name') }}" required autofocus />
-                @error('name')
+                <input type="text" name="nama" class="input-field" value="{{ old('nama') }}" required autofocus />
+                @error('nama')
                     <span style="color: red; font-size: 0.8em; margin-top: 4px; display: block;">{{ $message }}</span>
                 @enderror
             </div>

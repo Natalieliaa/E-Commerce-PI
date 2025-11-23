@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Customer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use App\Models\User;
 
 class AuthController extends Controller
 {
+    public function showLoginForm()
+    {
+        return view('auth.login');
+    }
+
     public function showRegisterForm()
     {
         return view('auth.register');
@@ -17,59 +22,51 @@ class AuthController extends Controller
     public function register(Request $request)
     {
         $request->validate([
-            'name' => 'required|string|max:255',
-            'email' => 'required|email|unique:users,email',
-            'password' => 'required|min:6|confirmed',
-            'role' => 'required|in:seller,customer',
+            'nama'       => 'required|string|max:255',
+            'no_telepon' => 'required|string|max:20',
+            'alamat'     => 'required|string',
+            'email'      => 'required|email|unique:customers,email',
+            'password'   => 'required|min:6',
         ]);
 
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'no_telepon' => $request->alamat,
-            'role' => $request->role,
+        $customer = Customer::create([
+            'nama'       => $request->nama,
+            'no_telepon' => $request->no_telepon,
+            'alamat'     => $request->alamat,
+            'email'      => $request->email,
+            'password'   => Hash::make($request->password),
         ]);
 
-        return redirect()->route('login')->with('success', 'Akun berhasil dibuat!');
-    }
+        Auth::login($customer);
 
-    public function showLoginForm()
-    {
-        return view('auth.login');
+        return redirect()->route('login')->with('success', 'Registrasi berhasil!');
     }
 
     public function login(Request $request)
-    {
-        $request->validate([
-            'email' => 'required|email',
-            'password' => 'required',
-        ]);
+{
+    $credentials = $request->validate([
+        'email'    => 'required|email',
+        'password' => 'required|min:6',
+    ]);
 
-        $credentials = $request->only('email', 'password');
-
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
-            // Clear any previously stored intended URL (prevent redirect back to /checkout)
-            $request->session()->forget('url.intended');
-
-            // Role-based redirect: customers -> products listing, others -> dashboard
-            $user = Auth::user();
-            if ($user && isset($user->role) && $user->role === 'customer') {
-                return redirect()->route('products.page');
-            }
-
-            return redirect()->route('dashboard');
-        }
-
-        return back()->withErrors([
-            'email' => 'Email atau password salah.',
-        ])->withInput(['email' => $request->email]);
+    if (Auth::guard('customer')->attempt($credentials)) {
+        $request->session()->regenerate();
+        return redirect()->route('dashboard')->with('success', 'Login berhasil!');
     }
 
-    public function logout()
+    return back()->withErrors([
+        'email' => 'Email atau password salah.',
+    ]);
+}
+
+
+    public function logout(Request $request)
     {
         Auth::logout();
-        return redirect()->route('login');
+        
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('/')->with('success', 'Berhasil logout!');
     }
 }
