@@ -17,6 +17,11 @@ return [
             'driver'   => 'session',
             'provider' => 'sellers',
         ],
+
+        'admin' => [
+            'driver' => 'session',
+            'provider' => 'admins',
+        ],
     ],
 
     'providers' => [
@@ -28,6 +33,11 @@ return [
         'sellers' => [
             'driver' => 'eloquent',
             'model' => App\Models\Seller::class,
+        ],
+
+        'admins' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Admin::class,
         ],
     ],
 

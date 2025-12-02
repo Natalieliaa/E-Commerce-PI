@@ -1,146 +1,194 @@
-@extends('template.main-template')
+@extends('layouts.customer')
 
+@section('title', 'Keranjang Belanja')
+7
 @section('content')
+<div class="max-w-7xl mx-auto px-8 py-8">
 
-    <div class="max-w-4xl mx-auto p-8 bg-white rounded-xl shadow-lg mt-8">
-
-        <h1 class="text-3xl font-bold text-gray-900 mb-8 flex items-center">
-            <svg class="w-8 h-8 mr-3 text-gray-700" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z"/></svg>
-            Keranjang Belanja
-        </h1>
-
-        <form method="POST" action="{{ route('checkout.process') }}">
-            @csrf
-
-            {{-- Daftar Produk di Keranjang --}}
-            <div class="space-y-8 mb-8 border-b border-gray-200 pb-8">
-
-                @php
-                    $cartItems = [
-                        ['id' => 1, 'name' => 'Tas Kayu', 'price' => 150000, 'stock' => 10, 'qty' => 1, 'rating' => 4.7, 'image' => 'tas_kayu.jpg'],
-                        ['id' => 2, 'name' => 'Meja Kayu', 'price' => 200000, 'stock' => 5, 'qty' => 1, 'rating' => 4.8, 'image' => 'meja_kayu.jpg'],
-                    ];
-                @endphp
-
-                @foreach ($cartItems as $item)
-                <div class="flex items-start p-4 border border-gray-200 rounded-lg bg-gray-50">
-
-                    {{-- Checkbox Pilih Item --}}
-                    <input type="checkbox" name="selected_items[]" value="{{ $item['id'] }}"
-                           checked class="w-6 h-6 text-red-600 rounded border-gray-300 focus:ring-red-500 mr-4 mt-1" onchange="updateTotal()">
-
-                    {{-- Gambar Produk --}}
-                    <div class="flex-shrink-0 mr-4">
-                        <img src="{{ asset('images/' . rawurlencode(basename($item['image']))) }}" alt="{{ $item['name'] }}" class="w-24 h-24 object-cover rounded-md shadow-sm">
-                    </div>
-
-                    {{-- Detail Item --}}
-                    <div class="flex-grow">
-                        <div class="flex justify-between items-center mb-1">
-                            <h2 class="text-xl font-semibold text-gray-900">{{ $item['name'] }}</h2>
-                            <span class="text-sm text-yellow-500 flex items-center ml-4">
-                                <svg class="w-4 h-4 mr-1" fill="currentColor" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.963a1 1 0 00.95.69h4.17c.969 0 1.371 1.24.588 1.81l-3.374 2.454a1 1 0 00-.364 1.118l1.286 3.963c.3.921-.755 1.688-1.54 1.118l-3.374-2.454a1 1 0 00-1.176 0l-3.374 2.454c-.784.57-1.84-.197-1.54-1.118l1.286-3.963a1 1 0 00-.364-1.118L2.091 9.39c-.783-.57-.381-1.81.588-1.81h4.17a1 1 0 00.95-.69l1.286-3.963z"></path></svg>
-                                {{ $item['rating'] }}
-                            </span>
-                        </div>
-
-                        <p class="text-lg font-medium text-gray-700">Harga: Rp {{ number_format($item['price'], 0, ',', '.') }}</p>
-                        <p class="text-sm text-gray-500">Stok tersedia: {{ $item['stock'] }} pcs</p>
-
-                        <div class="flex items-center mt-3">
-                            <label for="qty_{{ $item['id'] }}" class="text-sm text-gray-600 mr-2">Jumlah:</label>
-                            <input type="number" name="qty[{{ $item['id'] }}]" id="qty_{{ $item['id'] }}" value="{{ $item['qty'] }}"
-                                   min="1" max="{{ $item['stock'] }}" data-price="{{ $item['price'] }}"
-                                   class="w-16 p-1 border border-gray-400 rounded-md text-center quantity-input" onchange="updateTotal()">
-                        </div>
-                    </div>
-
-                    {{-- Tombol Lihat Detail (Di Sisi Kanan Atas) --}}
-                    <a href="{{ route('product.detail', ['id' => $item['id']]) }}" class="text-xs text-white bg-gray-700 hover:bg-gray-800 px-3 py-1 rounded-md">
-                        Lihat Detail
-                    </a>
-                </div>
-                @endforeach
-
-            </div> {{-- End Daftar Produk --}}
-
-            {{-- Footer Keranjang (Total dan Checkout) --}}
-            <div class="flex justify-between items-center pt-4">
-
-                <div class="flex items-center space-x-3">
-                    <input type="checkbox" id="select-all" class="w-5 h-5 text-red-600 rounded border-gray-300 focus:ring-red-500" onchange="toggleAll(this)">
-                    <label for="select-all" class="text-lg font-medium text-gray-700">Semua</label>
-                </div>
-
-                <div class="flex items-center space-x-6">
-                    <span class="text-xl font-medium text-gray-800">Total</span>
-                    <span id="total-price" class="text-2xl font-extrabold text-gray-900">Rp 350.000</span>
-
-                    <button type="submit" class="px-8 py-3 text-lg font-bold text-white rounded-lg shadow-md hover:opacity-90 transition duration-150" style="background-color: #934c26;">
-                        Checkout
-                    </button>
-                </div>
-            </div>
-        </form>
-
+    {{-- Header --}}
+    <div class="mb-8" data-aos="fade-down">
+        <h1 class="text-3xl font-bold text-gray-800">Keranjang Belanja 🛒</h1>
+        <p class="text-gray-600 mt-2">Review produk sebelum checkout</p>
     </div>
 
-@endsection
+    @if($cartItems->isEmpty())
+        {{-- Empty Cart --}}
+        <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-16 text-center" data-aos="fade-up">
+            <svg class="w-32 h-32 mx-auto mb-6 text-gray-300" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"/>
+            </svg>
+            <p class="text-2xl font-bold text-gray-400 mb-3">Keranjang Kosong</p>
+            <p class="text-gray-500 mb-6">Belum ada produk di keranjang Anda</p>
+            <a href="{{ route('customer.dashboard') }}" class="inline-flex items-center space-x-2 bg-purple-600 text-white px-8 py-3 rounded-lg hover:bg-purple-700 transition">
+                <svg class="w-5 h-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"/>
+                </svg>
+                <span class="font-semibold">Mulai Belanja</span>
+            </a>
+        </div>
+    @else
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            {{-- Cart Items --}}
+            <div class="lg:col-span-2 space-y-4">
+                @foreach($cartItems as $item)
+                <div class="bg-white rounded-xl shadow-sm border border-gray-200 p-6 hover:shadow-md transition" data-aos="fade-up">
+                    <div class="flex items-start space-x-4">
+                        {{-- Product Image --}}
+                        <img src="{{ $item->product->gambar ? asset('storage/'.$item->product->gambar) : 'https://via.placeholder.com/120' }}"
+                             alt="{{ $item->product->nama_produk }}"
+                             class="w-28 h-28 object-cover rounded-lg border border-gray-200">
 
-@push('scripts')
+                        {{-- Product Info --}}
+                        <div class="flex-1">
+                            <div class="flex justify-between items-start mb-2">
+                                <div>
+                                    <h3 class="font-bold text-gray-800 text-lg mb-1">{{ $item->product->nama_produk }}</h3>
+                                    <p class="text-sm text-gray-500">Seller: {{ $item->product->seller->name }}</p>
+                                </div>
+                                <button onclick="confirmRemove({{ $item->id }}, '{{ $item->product->nama_produk }}')" class="text-red-600 hover:text-red-800">
+                                    <svg class="w-6 h-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                                    </svg>
+                                </button>
+                            </div>
+
+                            <p class="text-purple-600 font-bold text-xl mb-4">Rp{{ number_format($item->product->harga, 0, ',', '.') }}</p>
+
+                            {{-- Quantity Control --}}
+                            <div class="flex items-center space-x-4">
+                                <form action="{{ route('customer.cart.update', $item->id) }}" method="POST" class="flex items-center space-x-2">
+                                    @csrf
+                                    @method('PUT')
+                                    <label class="text-sm text-gray-600 font-medium">Jumlah:</label>
+                                    <div class="flex items-center border border-gray-300 rounded-lg">
+                                        <button type="button" onclick="decrementQty({{ $item->id }})" class="px-3 py-2 hover:bg-gray-100 transition">
+                                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+                                            </svg>
+                                        </button>
+                                        <input type="number" name="quantity" id="qty-{{ $item->id }}" value="{{ $item->quantity }}" min="1" max="{{ $item->product->stok }}" class="w-16 text-center border-x border-gray-300 py-2 focus:outline-none" readonly>
+                                        <button type="button" onclick="incrementQty({{ $item->id }}, {{ $item->product->stok }})" class="px-3 py-2 hover:bg-gray-100 transition">
+                                            <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                                            </svg>
+                                        </button>
+                                    </div>
+                                    <button type="submit" class="px-4 py-2 bg-purple-600 text-white text-sm font-semibold rounded-lg hover:bg-purple-700 transition">
+                                        Update
+                                    </button>
+                                </form>
+                                <span class="text-sm text-gray-500">(Stok: {{ $item->product->stok }})</span>
+                            </div>
+
+                            {{-- Subtotal --}}
+                            <div class="mt-4 pt-4 border-t border-gray-200">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-gray-600">Subtotal:</span>
+                                    <span class="text-xl font-bold text-gray-800">Rp{{ number_format($item->product->harga * $item->quantity, 0, ',', '.') }}</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                @endforeach
+            </div>
+
+            {{-- Order Summary --}}
+            <div class="lg:col-span-1">
+                <div class="bg-white rounded-xl shadow-lg border border-gray-200 p-6 sticky top-8" data-aos="fade-up" data-aos-delay="100">
+                    <h2 class="text-2xl font-bold text-gray-800 mb-6">Ringkasan Belanja</h2>
+
+                    <div class="space-y-4 mb-6">
+                        <div class="flex justify-between text-gray-600">
+                            <span>Total Item</span>
+                            <span class="font-semibold">{{ $cartItems->sum('quantity') }} item</span>
+                        </div>
+                        <div class="flex justify-between text-gray-600">
+                            <span>Subtotal</span>
+                            <span class="font-semibold">Rp{{ number_format($total, 0, ',', '.') }}</span>
+                        </div>
+                        <div class="flex justify-between text-gray-600">
+                            <span>Ongkir</span>
+                            <span class="font-semibold text-green-600">Gratis</span>
+                        </div>
+                    </div>
+
+                    <div class="pt-6 border-t-2 border-gray-200 mb-6">
+                        <div class="flex justify-between items-center">
+                            <span class="text-lg font-semibold text-gray-800">Total Bayar</span>
+                            <span class="text-2xl font-bold text-purple-600">Rp{{ number_format($total, 0, ',', '.') }}</span>
+                        </div>
+                    </div>
+
+                    <a href="{{ route('customer.checkout') }}" class="block w-full bg-gradient-to-r from-purple-500 to-purple-600 text-white text-center py-4 rounded-lg font-bold hover:from-purple-600 hover:to-purple-700 transition shadow-lg">
+                        Lanjut ke Checkout
+                    </a>
+
+                    <a href="{{ route('customer.dashboard') }}" class="block w-full mt-3 border-2 border-gray-300 text-gray-700 text-center py-3 rounded-lg font-semibold hover:bg-gray-50 transition">
+                        Lanjut Belanja
+                    </a>
+                </div>
+            </div>
+        </div>
+    @endif
+</div>
+
+{{-- Modal Remove Confirmation --}}
+<div id="removeModal" class="hidden fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl max-w-md w-full p-8">
+        <div class="flex justify-center mb-6">
+            <div class="w-20 h-20 rounded-full bg-red-100 flex items-center justify-center">
+                <svg class="w-12 h-12 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+                </svg>
+            </div>
+        </div>
+
+        <h3 class="text-2xl font-bold text-gray-800 text-center mb-2">Hapus dari Keranjang?</h3>
+        <p class="text-gray-600 text-center mb-6">
+            Produk <strong id="removeProductName"></strong> akan dihapus dari keranjang
+        </p>
+
+        <div class="flex space-x-3">
+            <button onclick="closeRemoveModal()" class="flex-1 px-6 py-3 border-2 border-gray-300 text-gray-700 font-semibold rounded-lg hover:bg-gray-100 transition">
+                Batal
+            </button>
+            <form id="removeForm" method="POST" class="flex-1">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="w-full px-6 py-3 bg-red-600 text-white font-semibold rounded-lg hover:bg-red-700 transition">
+                    Ya, Hapus
+                </button>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
-    // Fungsi untuk memformat angka menjadi format mata uang Rupiah
-    const formatRupiah = (number) => {
-        return new Intl.NumberFormat('id-ID', {
-            style: 'currency',
-            currency: 'IDR',
-            minimumFractionDigits: 0
-        }).format(number);
-    };
-
-    function updateTotal() {
-        let total = 0;
-        const items = document.querySelectorAll('.quantity-input');
-        const selectAllCheckbox = document.getElementById('select-all');
-        let allChecked = true;
-
-        items.forEach(input => {
-            const checkbox = input.closest('.flex.items-start').querySelector('input[type="checkbox"]');
-
-            if (checkbox.checked) {
-                const price = parseFloat(input.getAttribute('data-price'));
-                const quantity = parseInt(input.value);
-                total += price * quantity;
-            } else {
-                allChecked = false;
-            }
-        });
-
-        document.getElementById('total-price').textContent = formatRupiah(total);
-        // Menjaga agar checkbox 'Semua' sinkron
-        if (selectAllCheckbox) {
-            selectAllCheckbox.checked = allChecked;
+    function incrementQty(itemId, maxStock) {
+        const input = document.getElementById(`qty-${itemId}`);
+        let value = parseInt(input.value);
+        if (value < maxStock) {
+            input.value = value + 1;
         }
     }
 
-    function toggleAll(source) {
-        const checkboxes = document.querySelectorAll('input[name="selected_items[]"]');
-        checkboxes.forEach(checkbox => {
-            checkbox.checked = source.checked;
-        });
-        updateTotal();
+    function decrementQty(itemId) {
+        const input = document.getElementById(`qty-${itemId}`);
+        let value = parseInt(input.value);
+        if (value > 1) {
+            input.value = value - 1;
+        }
     }
 
-    // Event listener untuk inisialisasi dan perubahan
-    document.addEventListener('DOMContentLoaded', function() {
-        // Attach listeners to all relevant inputs
-        const inputs = document.querySelectorAll('.quantity-input, input[name="selected_items[]"]');
-        inputs.forEach(input => {
-            input.addEventListener('change', updateTotal);
-        });
+    function confirmRemove(itemId, productName) {
+        document.getElementById('removeModal').classList.remove('hidden');
+        document.getElementById('removeProductName').textContent = productName;
+        document.getElementById('removeForm').action = `/customer/cart/${itemId}`;
+    }
 
-        // Panggil pertama kali untuk menghitung total awal
-        updateTotal();
-    });
+    function closeRemoveModal() {
+        document.getElementById('removeModal').classList.add('hidden');
+    }
 </script>
-@endpush
+@endsection

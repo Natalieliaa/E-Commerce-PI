@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class Customer extends Authenticatable
+class Admin extends Authenticatable
 {
     use Notifiable;
 
@@ -20,15 +20,4 @@ class Customer extends Authenticatable
     protected $hidden = [
         'password',
     ];
-
-    public function cart()
-{
-    return $this->hasOne(Cart::class);
-}
-
-public function orders()
-{
-    return $this->hasMany(Order::class);
-}
-
 }

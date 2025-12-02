@@ -30,7 +30,7 @@
 </head>
 
 <body class="antialiased bg-body text-body font-body bg-brown-50">
-    @include('components.navbar')
+    @include('components.dashboard-navbar')
     @yield('content')
 
     {{-- AOS Script --}}

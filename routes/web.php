@@ -2,7 +2,9 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProductController;
+use App\Http\Controllers\SellerController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -20,20 +22,21 @@ Route::post('/login', [AuthController::class, 'login']);
 
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// --- Rute Dashboard & Seller ---
-Route::get('/dashboard', function () {
-    return view('main.dashboard');
-})->name('dashboard');
+Route::get('/admin/dashboard', function() {
+    return view('admin.dashboard');
+})->name('admin.dashboard')->middleware('auth:admin');
 
-Route::get('/sellerconfirmation', function () {
-    return view('seller-confirmation');
-});
+Route::get('/seller/dashboard', function() {
+    return view('seller.dashboard');
+})->name('seller.dashboard')->middleware('auth:seller');
 
-// --- Detail Produk ---
-Route::get('/product/{slug}', [ProductController::class, 'show'])->name('productdetail');
+Route::get('/customer/dashboard', [CustomerController::class, 'index'])
+    ->name('customer.dashboard')
+    ->middleware('auth:customer');
 
 // --- Halaman daftar produk (pakai controller) ---
 Route::get('/products', [ProductController::class, 'index'])->name('products.page');
+Route::get('/product/{id}', [ProductController::class, 'detail'])->name('product.product-detail');
 
 
 // =======================
@@ -42,22 +45,7 @@ Route::get('/products', [ProductController::class, 'index'])->name('products.pag
 
 // GET /checkout -> terima ?slug=...&qty=...
 Route::get('/checkout', function (Request $request, ProductController $productController) {
-    $slug = $request->query('slug', '');
-    $qty  = (int) $request->query('qty', 1);
 
-    // cari produk dari controller
-    $product = $productController->findBySlug($slug);
-    if (! $product) {
-        abort(404, 'Produk untuk checkout tidak ditemukan.');
-    }
-
-    $totalPrice = $product['price'] * $qty;
-
-    return view('main.checkout', [
-        'product'    => $product,
-        'qty'        => $qty,
-        'totalPrice' => $totalPrice,
-    ]);
 })->name('checkout');
 
 // (opsional) POST /checkout untuk submit pesanan
